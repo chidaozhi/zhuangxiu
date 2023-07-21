@@ -2,6 +2,7 @@ import { useState } from "react";
 import tinycolor from "tinycolor2";
 import Examples from "./examples";
 import { Button } from "../components/button.tsx";
+import Diff from "./diff";
 import { list } from "../const/color";
 
 const sortColorsByHSLBrightness = (colors: List[]): List[] => {
@@ -51,7 +52,8 @@ export const Colors = () => {
 
   return (
     <div className="px-[2%] py-[4%] w-full h-full">
-      任选颜色对比：
+      
+      <Diff />
       {display && (
         <div
           className="fixed inset-2 z-10"
@@ -62,60 +64,60 @@ export const Colors = () => {
           <Button type="circle" onClick={handleOnLeave} />
         </div>
       )}
-
       {showExam && (
         <div className="fixed inset-2 z-10">
           <Examples color={value} onClose={handleCloseExam} />
         </div>
       )}
-
-      {sortColorsByHSLBrightness(list).map((v) => (
-        <div
-          key={v.value}
-          style={{ backgroundColor: v.value }}
-          className="box overflow-hidden box-border p-[1%]"
-          onClick={() => handleOnEnter(v.value)}
-          onMouseEnter={() => setShowTips(true)}
-          onMouseLeave={() => setShowTips(false)}
-        >
-          <span>
-            {v.name}
-            <br />
-            {String(v.value)}
-          </span>
-          <br />
-          <span
-            className="text-white cursor-pointer"
-            style={{ opacity: showTips ? 1 : 0 }}
-          >
-            点击可以放大，对着墙看
-          </span>
-
-          <button
-            className="btn btn-outline btn-error block m-auto"
-            onClick={(e) => handleShowExam(e, v.value)}
-          >
-            样例
-          </button>
-        </div>
-      ))}
-
-      <br />
-
-      {sortColorsByHSLBrightness(list).map((v) => (
-        <>
+      <div>
+        {sortColorsByHSLBrightness(list).map((v) => (
           <div
-            className="tooltip"
-            data-tip={`${v.name}-${(v.value.toHsl().l * 100).toFixed(2) + "%"}`}
+            key={v.value}
+            style={{ backgroundColor: v.value }}
+            className="box overflow-hidden box-border p-[1%]"
+            onClick={() => handleOnEnter(v.value)}
+            onMouseEnter={() => setShowTips(true)}
+            onMouseLeave={() => setShowTips(false)}
           >
-            <div
-              key={v.value}
-              style={{ backgroundColor: v.value }}
-              className="small-box cursor-pointer"
-            ></div>
+            <span>
+              {v.name}
+              <br />
+              {String(v.value)}
+            </span>
+            <br />
+            <span
+              className="text-white cursor-pointer"
+              style={{ opacity: showTips ? 1 : 0 }}
+            >
+              点击可以放大，对着墙看
+            </span>
+
+            <button
+              className="btn btn-outline btn-error block m-auto"
+              onClick={(e) => handleShowExam(e, v.value)}
+            >
+              样例
+            </button>
           </div>
-        </>
-      ))}
+        ))}
+        <br />
+        {sortColorsByHSLBrightness(list).map((v) => (
+          <>
+            <div
+              className="tooltip"
+              data-tip={`${v.name}-${
+                (v.value.toHsl().l * 100).toFixed(2) + "%"
+              }`}
+            >
+              <div
+                key={v.value}
+                style={{ backgroundColor: v.value }}
+                className="small-box cursor-pointer"
+              ></div>
+            </div>
+          </>
+        ))}
+      </div>
     </div>
   );
 };

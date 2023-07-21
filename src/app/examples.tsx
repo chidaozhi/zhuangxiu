@@ -1,4 +1,5 @@
 import { Button } from "../components/button.tsx";
+import Pic from "../assets/images/001.png";
 
 export default function Examples({ color, onClose }) {
   return (
@@ -7,7 +8,7 @@ export default function Examples({ color, onClose }) {
         className="w-full h-[585px] bg-no-repeat bg-contain"
         style={{
           backgroundColor: color,
-          backgroundImage: `url(http://www.jonas-china.com/hshtml/home/assets/img/ysxzt001.png)`,
+          backgroundImage: `url(${Pic})`,
         }}
       ></div>
       <Button
